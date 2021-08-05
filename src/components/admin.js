@@ -6,6 +6,10 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import TextField from '@material-ui/core/TextField';
 import '../App.css'
 
 const Admin = () => {
@@ -126,9 +130,9 @@ const Admin = () => {
         
       
         return (
-          <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
+          <Dialog fullWidth="true" onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
             <DialogTitle>Add School District</DialogTitle>
-            <List>
+            {/* <List>
                 <ListItem>
                 <input 
                     type="text" 
@@ -140,7 +144,29 @@ const Admin = () => {
                 <ListItem>
                 <Button variant="contained" color="primary" style={{width: "70px"}} onClick={addItem}>Add</Button>
                 </ListItem>
-            </List>
+            </List> */}
+          <DialogContent>
+          <DialogContentText>
+            Add School District
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Add School District.."
+            type="text"
+            fullWidth="true"
+            
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={addItem} style={{width: "70px"}} color="primary">
+            Add
+          </Button>
+          <Button onClick={handleClose} style={{width: "70px"}} color="primary">
+            Cancel
+          </Button>
+        </DialogActions>
             
           </Dialog>
         );
