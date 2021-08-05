@@ -15,37 +15,60 @@ import '../App.css'
 const Admin = () => {
     const [open, setOpen] = useState(false);
     const [open1, setOpen1] = useState(false);
-    const [input1, setInput1] = useState('');
     const [inputData, setInputData] = useState('');
     const [district, setDistrict] = useState();
     const [menu, setMenu] = useState([]);
     const [sites, setSites] = useState([]);
+    const [count,setCount] = useState(0)
+    const [user1,setUser1] = useState([])
+    const [currentDis,setDis]= useState("")
+
     
-    const user1 = {
-        userDistrict: district,
-        userMenu: menu,
-        userSite: sites
-    }
+   
+
+    
 
     const addItem = () => {
-        if(!inputData){
-
+        if(document.getElementById('item12').value === '') {
+          console.log(inputData)
         }else{
-            
-        setDistrict(inputData);
-        user1.userDistrict = district;
-        setInputData('');
+          const distric =  document.getElementById('item12').value
+          
+        let obT = {
+          distric,
+          menu12:[],
+          site12:[]
+          }
+         
+      
+        // setDistrict(document.getElementById('item12').value);
+        const user12 = user1;
+        user12.push(obT)
+        setUser1(user12)
+        document.getElementById('item12').value = "";
+        setOpen(false)
+       
+        console.log(user1)
+      
         }
     }
 
     const addMenu = () => {
-        if(!inputData){
-
+        if(document.getElementById(currentDis).value === ''){
+         
         }else{
-            
-        setMenu(inputData);
-        user1.userMenu = menu;
-        setInputData('');
+         user1.map(de=>{
+          if(de.distric === currentDis){
+            de.menu12.push(document.getElementById(currentDis).value)
+            handleClose1()
+
+          }
+          else{
+            console.log(currentDis)
+          }
+          
+         })
+         console.log(user1)
         }
     }
 
@@ -61,7 +84,7 @@ const Admin = () => {
         setOpen1(true);
       };
     
-      const handleClose1 = (value) => {
+      const handleClose1 = () => {
         setOpen1(false);
       };
 
@@ -94,28 +117,30 @@ const Admin = () => {
       ]
       function SimpleDialogMenu(props) {
         
-        const { open1 } = props;
-        const handleClose1 = (value) => {
-            setOpen1(false);
-          };
-        
-      
+        const {district12} = props
+        setDis(district12)
         return (
-          <Dialog onClose={handleClose1} aria-labelledby="simple-dialog-title" open={open1}>
+          <Dialog fullWidth="true" onClose={handleClose1} aria-labelledby="form-dialog-title" open={open1}>
             <DialogTitle>Add Menu</DialogTitle>
-            <List>
-                <ListItem>
-                <input 
-                    type="text" 
-                    placeholder="Add Menu.." 
-                    value={inputData} 
-                    onChange={(e) => setInputData(e.target.value)}
-                />
-                </ListItem>
-                <ListItem>
-                <Button variant="contained" color="primary" style={{width: "70px"}} onClick={addMenu}>Add</Button>
-                </ListItem>
-            </List>
+          <DialogContent>
+          
+          <TextField
+            autoFocus
+            margin="dense"
+            id={district12}
+            label="Add Menu.."
+            type="text"
+            fullWidth
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={addMenu} style={{width: "70px"}} color="primary">
+            Add
+          </Button>
+          <Button onClick={handleClose1} style={{width: "70px"}} color="primary">
+            Cancel
+          </Button>
+        </DialogActions>
             
           </Dialog>
         );
@@ -130,33 +155,17 @@ const Admin = () => {
         
       
         return (
-          <Dialog fullWidth="true" onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
+          <Dialog fullWidth="true" onClose={handleClose} aria-labelledby="form-dialog-title" open={open}>
             <DialogTitle>Add School District</DialogTitle>
-            {/* <List>
-                <ListItem>
-                <input 
-                    type="text" 
-                    placeholder="Add School District.." 
-                    value={input1}
-                    onChange={(e) => {e.preventDefault(); setInput1(e.target.value)}}
-                />
-                </ListItem>
-                <ListItem>
-                <Button variant="contained" color="primary" style={{width: "70px"}} onClick={addItem}>Add</Button>
-                </ListItem>
-            </List> */}
           <DialogContent>
-          <DialogContentText>
-            Add School District
-          </DialogContentText>
+          
           <TextField
             autoFocus
             margin="dense"
-            id="name"
+            id="item12"
             label="Add School District.."
             type="text"
-            fullWidth="true"
-            
+            fullWidth
           />
         </DialogContent>
         <DialogActions>
@@ -203,48 +212,62 @@ const Admin = () => {
           
           {
             
-            <tr>
-               <td>{1}</td>
-            <td>{user1.userDistrict}</td>
-          <td>
-          <div style={{textAlign: "center"}}>
-            <i className="fa fa-plus fa-black" onClick={handleClickOpen1}></i>
-            <SimpleDialogMenu open={open1} onClose={handleClose1} />
-            </div>
-              <Table >
-        <tbody>
-              {
-                
+            user1.map((dis,index)=>{
+              return(
                 <tr>
-                  <td>{user1.userMenu}</td>
-                </tr>
-                
-              }
-              </tbody>
-              </Table>
-            </td>
-            <td>
-                <div style={{textAlign: "center"}}>
-            <i className="fa fa-plus fa-black"></i>
-            </div>
-              {/*  */}
-              <Table >
-        <tbody>
-              {
-            
 
-                <tr>
-                  <td>{}</td>
-                </tr>
-                
-              }
-              </tbody>
-              </Table>
-              {/*  */}
-            </td>
-          </tr>
-          
-          }
+             
+                <td><ol>asc211324</ol></td>
+             <td>{dis.distric}</td>
+           <td>
+           <div style={{textAlign: "center"}}>
+             <i className="fa fa-plus fa-black" onClick={handleClickOpen1}></i>
+             <SimpleDialogMenu open={open1} district12={dis.distric} onClose={handleClose1} />
+             </div>
+               <Table >
+         <tbody>
+               {
+                 
+                 <tr>
+                  {dis.menu12.map((user)=>{
+                     return(<tr>
+                     {user}
+                     
+                     </tr>)
+                   })}
+                 </tr>
+                 
+               }
+               </tbody>
+               </Table>
+             </td>
+             <td>
+                 <div style={{textAlign: "center"}}>
+             <i className="fa fa-plus fa-black"></i>
+             </div>
+               {/*  */}
+               <Table >
+         <tbody>
+               {
+             
+  
+                 <tr>
+                   <td>{}</td>
+                 </tr>
+                 
+               }
+               </tbody>
+               </Table>
+               {/*  */}
+             </td>
+           </tr>
+              )
+            })
+             
+            
+         
+
+        }
         </tbody>
       </Table>
 
