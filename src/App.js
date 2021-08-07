@@ -1,12 +1,29 @@
 import React from 'react';
 import Admin from './components/admin';
-import Todo from './components/todo';
-
+import Staff from './components/staff';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
 const App = () => {
   return (
-    <>
-      <Admin />
-    </>
+    <Router>
+      <div>
+      
+
+      
+        <Switch>
+          <Route path="/admin">
+            <Admin />
+          </Route>
+          <Route path="/staff">
+            <Staff />
+          </Route>
+         
+        </Switch>
+      </div>
+    </Router>
   );
 }
 

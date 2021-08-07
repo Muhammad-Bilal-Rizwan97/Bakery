@@ -5,19 +5,19 @@ const {v1 : uuidv1} = require('uuid')
 const {ObjectId} = mongoose.Schema
 const adminSchema = new mongoose.Schema({
     
-    district:[{
-        name:{
-            type:String,
-            required:true,
-            maxlength:32
-        },
-        menu:[{
-            subMenu : {type: String, max: 100}
-        }],
-        site:[{
-            subSite : {type: String, max: 100}
-        }]
-    }],
+   
+    district:{type: String,required:true},
+    menu:{
+        
+        submenu:{type: [String]},
+        description:{type:[String]}
+        
+    },
+    site:{
+        type: [String]
+    }
+
+    
   
 },{timestamps:true})
 
