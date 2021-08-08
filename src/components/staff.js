@@ -10,20 +10,18 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import Checkbox from '@material-ui/core/Checkbox';
-import ListItemText from '@material-ui/core/ListItemText';
 import Chip from '@material-ui/core/Chip';
 import Axios from "axios";
-import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
 import 'date-fns';
 import {
     MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -41,9 +39,17 @@ const useStyles = makeStyles((theme) => ({
   chip: {
     margin: 2,
   },
+  root: {
+    width: '100%',
+    '& > * + *': {
+      marginTop: theme.spacing(2),
+    },
+  },
 }));
 
-
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 function getStyles(name, personName, theme) {
     return {
@@ -72,9 +78,8 @@ function Staff() {
   const classes = useStyles();
   const theme = useTheme();
   const [menu, setMenu] = useState([]);
-
-
   const [open, setOpen] = useState(true);
+  const [open1, setOpen1] = useState(false);
   const [district, setDistrict] = useState("");
   const [school, setSchool] = useState("");
   const [data, setData] = useState([]);
@@ -83,8 +88,9 @@ function Staff() {
   const [dis,setDis] =useState(true)  
   const [dis1,setDis1] =useState(true)  
   const [dis2,setDis2] =useState(true)  
-  const [selectedDate, setSelectedDate] = useState(new Date('2014-08-18T21:11:54'));
-
+  const [selectedDate, setSelectedDate] = useState(new Date('2021-07-18T21:11:54'));
+  const [message,setMessage] = useState("")
+  const [severity,setSev] = useState("")
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
@@ -140,8 +146,33 @@ function Staff() {
   const handleClose = () => {
     setOpen(false);
   };
+  const handleClose1 = () => {
+    setOpen1(false);
+  };
 
 
+  const handleSub = () => {
+    const response = {
+      district:district,
+      site:school,
+      deliveryDate:selectedDate,
+      menu:menu
+
+    }
+    Axios.post('http://localhost:8088/api/staff/request',response).then(data=>{
+      if(data.data.status==='success'){
+        handleClose()
+        setMessage("Mail Sent Successfully!")
+        setSev("success")
+        setOpen1(true)
+      }
+      else{
+        setMessage("Something Went Wrong Please Try Again!")
+        setSev("error")
+        setOpen1(true)
+      }
+    });
+  }
 
 
 
@@ -176,6 +207,13 @@ function Staff() {
 
   return (
     <div>
+       <Snackbar open={open1} autoHideDuration={6000} onClose={handleClose1}>
+        <Alert onClose={handleClose1} severity={severity}>
+          {message}
+        </Alert>
+      </Snackbar>
+
+
       <div style={{ display: "grid" }}>
         <Button
           style={{ margin: "auto" }}
@@ -229,8 +267,7 @@ function Staff() {
           </FormControl>
 
 
-
-
+         
 
 
 
@@ -284,7 +321,7 @@ function Staff() {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button  color="primary">
+          <Button onClick={(e)=>{handleSub()}} color="primary">
             Subscribe
           </Button>
         </DialogActions>

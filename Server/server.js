@@ -8,7 +8,7 @@ require('dotenv').config()
 const colors = require('colors')
 // import routes
 const adminRoutes = require('./routes/admin')
-
+const staffRoutes = require('./routes/staff')
  //app
 const app = express()
 
@@ -33,7 +33,7 @@ app.use(cors())
 
 // routes
 app.use('/api/admin',adminRoutes)
-
+app.use('/api/staff',staffRoutes)
 const port = 8088
 
 app.listen(port,()=>{
