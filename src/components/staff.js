@@ -28,6 +28,11 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
     minWidth: 120,
+    marginTop: 16,
+  },
+  formControl1: {
+    margin: theme.spacing(1),
+    minWidth: 420,
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
@@ -81,7 +86,7 @@ function Staff() {
   const classes = useStyles();
   const theme = useTheme();
   const [menu, setMenu] = useState([]);
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [open1, setOpen1] = useState(false);
   const [district, setDistrict] = useState("");
   const [school, setSchool] = useState("");
@@ -213,15 +218,19 @@ function Staff() {
         </Alert>
       </Snackbar>
 
-      <div style={{ display: "grid" }}>
+      <div style={{marginLeft: "20px", marginTop: "20px"}}>
+        <h1 style={{textAlign: "center"}}>Bonami Bakery</h1>
+        <div style={{textAlign: "center"}}>
         <Button
-          style={{ margin: "auto" }}
+          style={{ backgroundColor: "#20c997", color: "black" }}
           variant="outlined"
           color="primary"
           onClick={handleClickOpen}
         >
-          Open form dialog
+          Order Now!!!
         </Button>
+        </div>
+        
       </div>
 
       <Dialog
@@ -230,9 +239,8 @@ function Staff() {
         aria-labelledby="form-dialog-title"
         fullWidth="true"
       >
-        <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+        <DialogTitle id="form-dialog-title">Order Your Meal</DialogTitle>
         <DialogContent>
-          <DialogContentText>Selection</DialogContentText>
           <FormControl className={classes.formControl}>
             <InputLabel id="demo-simple-select-label">district</InputLabel>
             <Select
@@ -264,7 +272,22 @@ function Staff() {
             </Select>
           </FormControl>
 
-          <FormControl className={classes.formControl} disabled={dis1}>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardDatePicker
+              margin="normal"
+              id="date-picker-dialog"
+              label="Date picker dialog"
+              format="MM/dd/yyyy"
+              value={selectedDate}
+              onChange={handleDateChange}
+              KeyboardButtonProps={{
+                "aria-label": "change date",
+              }}
+              disabled={dis2}
+            />
+          </MuiPickersUtilsProvider>
+
+          <FormControl className={classes.formControl1} disabled={dis1}>
             <InputLabel id="demo-mutiple-chip-label">Menu</InputLabel>
             <Select
               labelId="demo-mutiple-chip-label"
@@ -282,7 +305,7 @@ function Staff() {
               )}
               MenuProps={MenuProps}
             >
-              //TODO Zubair
+              
               <Popover
                 id="mouse-over-popover"
                 className={classes.popover}
@@ -318,20 +341,7 @@ function Staff() {
             </Select>
           </FormControl>
 
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <KeyboardDatePicker
-              margin="normal"
-              id="date-picker-dialog"
-              label="Date picker dialog"
-              format="MM/dd/yyyy"
-              value={selectedDate}
-              onChange={handleDateChange}
-              KeyboardButtonProps={{
-                "aria-label": "change date",
-              }}
-              disabled={dis2}
-            />
-          </MuiPickersUtilsProvider>
+          
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
@@ -343,7 +353,7 @@ function Staff() {
             }}
             color="primary"
           >
-            Subscribe
+            Submit
           </Button>
         </DialogActions>
       </Dialog>

@@ -250,11 +250,11 @@ const Admin = () => {
       <div>
       
       <Dialog open={open1} onClose={handleClose1} aria-labelledby="form-dialog-title" fullWidth="true">
-        <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+        <DialogTitle id="form-dialog-title">Add Menu and Description</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-           Add Menu and Description For District 
-          </DialogContentText>
+          {/* <DialogContentText>
+            For District 
+          </DialogContentText> */}
           <TextField
             autoFocus
             margin="dense"
@@ -290,9 +290,6 @@ const Admin = () => {
       <Dialog open={open3} onClose={handleClose3} aria-labelledby="form-dialog-title" fullWidth="true">
         <DialogTitle id="form-dialog-title">Add School Site </DialogTitle>
         <DialogContent>
-          <DialogContentText>
-           Add School Site
-          </DialogContentText>
           <TextField
             autoFocus
             margin="dense"
@@ -315,12 +312,12 @@ const Admin = () => {
       </Dialog>
     </div>
 
-
+          <div style={{width: "820px"}}>
             <Grid container spacing={3}>
-                <Grid item xs={6}>
-                    <h1>Bonami Bakery</h1>
+                <Grid item xs={6} style={{marginTop: "10px"}}>
+                    <h1 style={{marginLeft: '20px'}}>Bonami Bakery</h1>
                 </Grid>
-                <Grid item xs={6} style={{textAlign: "right", marginTop: "10px"}}>
+                <Grid item xs={6} style={{textAlign: "right", marginTop: "15px"}}>
                     <Button variant="contained" color="primary" onClick={handleClickOpen}>
                         Add School District
                     </Button>
@@ -334,8 +331,8 @@ const Admin = () => {
           <tr style={{marginLeft:'20px'}}>
          
             <td>School Districts</td>
-            <td>Menu</td>
             <td>School Sites</td>
+            <td>Menu</td>
             <td>Action</td>
           </tr>
           
@@ -348,7 +345,34 @@ const Admin = () => {
                 <tr>
                 
                   <td>{dis.district}</td>
-                <td>
+                
+             <td>
+                 <div style={{display:"flex" , flexDirection: "column"}}>
+             <i className="fa fa-plus fa-black" style={{paddingLeft:'40px'}}  onClick={(e)=>{
+                    setDis(dis.district)
+                    handleClickOpen3()
+                       
+             }}></i>
+              {
+                 
+                 
+                 dis.site.map((user,index)=>{
+                    return(
+                     
+                    <tr  >
+                    {user}
+                    </tr>
+                   
+                    
+                    )
+                  })
+                
+                
+              }
+             </div>
+            
+             </td>
+             <td>
                 <div style={{display:"flex" , flexDirection: "column"}}>
                   <i className="fa fa-plus fa-black" style={{paddingLeft:'30px'}}  onClick={(e)=>{
                     setDis(dis.district)
@@ -377,32 +401,6 @@ const Admin = () => {
               }
              </div>
              </td>
-             <td>
-                 <div style={{display:"flex" , flexDirection: "column"}}>
-             <i className="fa fa-plus fa-black" style={{paddingLeft:'40px'}}  onClick={(e)=>{
-                    setDis(dis.district)
-                    handleClickOpen3()
-                       
-             }}></i>
-              {
-                 
-                 
-                 dis.site.map((user,index)=>{
-                    return(
-                     
-                    <tr  >
-                    {user}
-                    </tr>
-                   
-                    
-                    )
-                  })
-                
-                
-              }
-             </div>
-            
-             </td>
              <td style={{alignSelf:'center'}}> 
              <i className="fas fa-trash"   onClick={(e)=>{
                     setDis(dis.district)
@@ -420,6 +418,7 @@ const Admin = () => {
         }
         </tbody>
       </Table>
+      </div>
 
     </div>
     )
